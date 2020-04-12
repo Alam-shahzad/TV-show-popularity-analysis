@@ -1,0 +1,148 @@
+#TV SHOW POPULARITY ANALYSIS
+import pandas as pd
+import numpy as np
+import tkinter
+import matplotlib.pyplot as plt
+from tkinter import *
+top = tkinter.Tk()
+L = Label(top, text="TV Show Popularity Analysis")
+L.pack( side = TOP)
+C = tkinter.Canvas(top, height=160, width=800)
+
+def bargraph1(ynt,yne,ype):
+    x=np.arange(3)
+    y=ynt
+    y1=yne
+    y2=ype
+    width = 0.4
+    plt.xticks(x,["NDTV","Aaj Tak","BBC World News"])
+    plt.bar(x-0.20,y,width,color='#E61D1D',label = "negative comment")
+    plt.bar(x,y1,width,color='#C7FFED',label = "neutral comment" )
+    plt.bar(x,y2,width,color='#E1FD00',label = "positive comment", align = 'edge' )
+    plt.title('Bar Graph')
+    plt.ylabel('Y AXIS')
+    plt.xlabel('X AXIS')
+    plt.legend()
+    plt.show()
+
+
+def filec():
+    df=pd.read_csv("Book.csv")
+    a=df['NDTV'].values
+    b=df['Aaj Tak'].values
+    c=df['BBC World News'].values
+    negative=['pathetic','boring','worse','worst','maniac','bad','underrated','1 star']
+    neutral=['average','nice','fine','good','worth it','not bad','good','better','medioker','likely']
+    positive=['5 star','overrated', 'awesome', 'too good','glorius', 'good one', 'dominating','excellent','best','brilliant','awesome','great','exciting']
+    a1sum=0
+    b1sum=0
+    c1sum=0
+    a2count=0
+    a3count=0
+    a4count=0
+    b2count=0
+    b3count=0
+    b4count=0
+    c2count=0
+    c3count=0
+    c4count=0
+    for i in range(1,12):
+        for j in range(0,7):
+            if a[i]==negative[j]:
+                a1sum=a1sum-10
+                a2count=a2count+1
+    for i in range(1,12):
+        for j in range(0,9):
+            if a[i]==neutral[j]:
+                a1sum=a1sum+5
+                a3count=a3count+1
+    for i in range(1,12):
+        for j in range(0,12):
+            if a[i]==positive[j]:
+                a1sum=a1sum+10
+                a4count=a4count+1
+
+
+
+    for i in range(1,12):
+        for j in range(0,7):
+            if b[i]==negative[j]:
+                b1sum=b1sum-10
+                b2count=b2count+1
+    for i in range(1,12):
+        for j in range(0,9):
+            if b[i]==neutral[j]:
+                b1sum=b1sum+5
+                b3count=b3count+1
+    for i in range(1,12):
+        for j in range(0,12):
+            if b[i]==positive[j]:
+                b1sum=b1sum+10
+                b4count=b4count+1
+                
+    
+    for i in range(1,12):
+        for j in range(0,7):
+            if c[i]==negative[j]:
+                c1sum=c1sum-10
+                c2count=c2count+1
+    for i in range(1,12):
+        for j in range(0,9):
+            if c[i]==neutral[j]:
+                c1sum=c1sum+5
+                c3count=c3count+1
+    for i in range(1,12):
+        for j in range(0,12):
+            if c[i]==positive[j]:
+                c1sum=c1sum+10
+                c4count=c4count+1
+    
+    negl=[a2count,b2count,c2count]
+    neul=[a3count,b3count,c3count]
+    posl=[a4count,b4count,c4count]
+
+
+
+    if a1sum>b1sum&c1sum:
+        print("According to  the comment NDTV is the best reviewed show")
+    elif bsum>asum&csum:
+        print("According to  the comment Aaj Tak is the best reviewed show")
+    else:
+        print("According to  the comment BBC World News is the best reviewed show")
+        
+                
+    bargraph1(negl,neul,posl)
+                
+                     
+           
+frame = Frame(top)
+frame.pack()
+
+bottomframe = Frame(top)
+bottomframe.pack( side = BOTTOM )
+
+
+blackbutton = Button(bottomframe, height= 8, width=20, text="Show TV Popularity", fg="black")
+blackbutton['command']=filec
+blackbutton.pack( side = BOTTOM )
+
+
+m=  Menubutton ( top, text="All TV Shows ", relief=RAISED , height = 5 , width = 30 )
+
+m.menu  =  Menu ( m, tearoff = 0 )
+m["menu"]  =  m.menu
+    
+bb  = IntVar()
+mt = IntVar()
+ig = IntVar()
+
+m.menu.add_checkbutton ( label="NDTV",
+                          variable=bb )
+m.menu.add_checkbutton ( label="Aaj Tak",
+                          variable=mt )
+m.menu.add_checkbutton ( label="BBC World News",
+                          variable=ig )
+
+m.pack()
+C.pack()
+top.mainloop()
